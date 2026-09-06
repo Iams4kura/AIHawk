@@ -24,10 +24,20 @@
 
 ### 1. From your assistant, over MCP
 
+Windows, in PowerShell:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+$env:Path = "$env:USERPROFILE\.local\bin;$env:Path"
+uvx invisible-playwright fetch
+```
+
+Linux:
+
 ```bash
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"   # Windows: uv, once
-curl -LsSf https://astral.sh/uv/install.sh | sh                                         # Linux: uv, once
-uvx invisible-playwright fetch                                                          # in a new terminal
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+uvx invisible-playwright fetch
 ```
 
 Then tell your assistant it exists.
@@ -55,10 +65,21 @@ gemini mcp add --scope user stealth uvx invisible-playwright-mcp
 We bring the interface, you bring an [OpenRouter](https://openrouter.ai) key.
 Chat on the left, the live browser on the right.
 
+Windows, in PowerShell:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+$env:Path = "$env:USERPROFILE\.local\bin;$env:Path"
+uvx invisible-playwright fetch
+uvx aihawk ui --openrouter-key sk-or-...
+```
+
+Linux:
+
 ```bash
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"   # Windows: uv, once
-curl -LsSf https://astral.sh/uv/install.sh | sh                                         # Linux: uv, once
-uvx invisible-playwright fetch                                                          # in a new terminal
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+uvx invisible-playwright fetch
 uvx aihawk ui --openrouter-key sk-or-...
 ```
 
