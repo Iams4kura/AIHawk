@@ -133,7 +133,7 @@ def ui(openrouter_key, model, host, port, proxy, seed, headed, binary, profile_d
         import uvicorn
 
         link = await Link(opts, key=key).open()
-        click.echo("browser  ready, %d tools" % len(link.tools))
+        click.echo("server   connected, %d tools" % len(link.tools))
         click.echo("open     http://%s:%d" % (host, port))
         service = ChatService(link, brain, model_label=label)
         app = build_app(link, service)

@@ -22,39 +22,32 @@
 
 ## Two ways to use this browser agent
 
-The only question is where the model comes from.
-
 ### 1. From your assistant, over MCP
 
-Your assistant brings the model. You add this browser to it, and nothing changes
-about how you work.
+```bash
+pip install aihawk
+invisible-playwright fetch
+```
+
+Then tell your assistant it exists.
 
 **Claude Code:**
 
 ```bash
-claude mcp add --scope user stealth -- uvx invisible-playwright-mcp
+claude mcp add --scope user stealth -- invisible-playwright-mcp
 ```
 
 **Codex:**
 
 ```bash
-codex mcp add stealth -- uvx invisible-playwright-mcp
+codex mcp add stealth -- invisible-playwright-mcp
 ```
 
 **Gemini CLI:**
 
 ```bash
-gemini mcp add --scope user stealth uvx invisible-playwright-mcp
+gemini mcp add --scope user stealth invisible-playwright-mcp
 ```
-
-Then ask your assistant, in the window you already have open:
-
-> Go to news.ycombinator.com and give me the top five titles.
-
-Claude Desktop, Cursor, VS Code, Windsurf, Zed and Cline take a config file
-instead, and the file is not the same shape for all of them. Each one is
-written out in the
-[server's README](https://github.com/feder-cr/invisible-playwright-mcp#adding-it-to-your-client).
 
 ### 2. Standalone: the web UI
 
@@ -62,37 +55,12 @@ We bring the interface, you bring an [OpenRouter](https://openrouter.ai) key.
 Chat on the left, the live browser on the right.
 
 ```bash
-uvx aihawk ui --openrouter-key sk-or-...
+pip install aihawk
+invisible-playwright fetch
+aihawk ui --openrouter-key sk-or-...
 ```
 
 Then open **http://127.0.0.1:8765** and type the same thing.
-
-**Same patched Firefox behind both.** AIHawk reaches it through that MCP server,
-over MCP, exactly as your assistant would.
-
----
-
-## Before either one
-
-**Python 3.11 or newer**, on **Windows (x86_64)** or **Linux (x86_64, arm64)**.
-macOS is not supported: the last engine build for it was `firefox-20`.
-
-Both commands above start with `uvx`, so you need [uv](https://docs.astral.sh/uv/):
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh              # Linux
-powershell -c "irm https://astral.sh/uv/install.ps1 | iex"   # Windows
-```
-
-**The browser is a separate download of about a quarter of a gigabyte**, and it
-does not arrive when you install either side. It arrives on the first request
-that needs a page, so your first instruction sits there for a while and a slow
-connection can time out with an error that says nothing about a download. Get it
-over with first, where you can watch it:
-
-```bash
-uvx invisible-playwright fetch
-```
 
 ---
 
@@ -147,12 +115,6 @@ Passing `--openrouter-key` puts the key in your shell history, and on Linux in
 the process list. `OPENROUTER_API_KEY` in the environment or in a `.env` avoids
 both.
 
-Either way it does not reach the browser process: it is removed from the
-environment the engine starts with, by name and by value, so a copy under a
-second name goes too.
-[`tests/test_key_isolation.py`](https://github.com/feder-cr/AIHawk/blob/main/tests/test_key_isolation.py)
-fails if that stops being true.
-
 ## The wiki: AI browser-agent guides
 
 The reading room around the agent lives in the
@@ -173,16 +135,6 @@ among others. Worked examples, transcripts and their outputs live in
   is Playwright's.
 - **[invisible_core](https://github.com/feder-cr/invisible_core)**
   Seed to fingerprint to preferences, proxy and geolocation.
-
-## Contributing
-
-Issues and pull requests welcome on whichever of those the problem lives in. If
-you are not sure, open it here. See
-[CONTRIBUTING](https://github.com/feder-cr/AIHawk/blob/main/.github/CONTRIBUTING.md).
-
-When something fails on a page, say which step, what the page did, what the tool
-returned and which exit country you were on. "It got blocked" is not something
-anyone can act on.
 
 ## Using it responsibly
 
